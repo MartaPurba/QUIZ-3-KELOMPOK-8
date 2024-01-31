@@ -1,4 +1,4 @@
-# QUIZ-3-KELOMPOK-8
+# Sanber53-Cypress-Kelompok 8
 
 Quiz 3 dari kelompok 8
 
