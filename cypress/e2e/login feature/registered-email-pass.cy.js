@@ -1,6 +1,6 @@
 describe('E2E Login to dashboard', () => {
 
-    it('input valid registered email and password then Login', () => {
+    it('input valid registered email and password then Login -> Account Info -> Logout', () => {
       cy.visit('https://magento.softwaretestingboard.com/')
       cy.then(Cypress.session.clearCurrentSessionData)
       cy.contains("Sign In").click()
