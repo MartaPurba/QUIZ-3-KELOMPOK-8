@@ -11,4 +11,8 @@ module.exports = defineConfig({
   env: {
     baseUrl: "https://magento.softwaretestingboard.com/",
   },
+
+  defaultCommandTimeout: 5432,
+  viewportWidth: 990,
+  viewportHeight: 650,
 });
