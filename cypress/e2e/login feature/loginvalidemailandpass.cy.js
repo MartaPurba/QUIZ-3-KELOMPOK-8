@@ -1,6 +1,6 @@
 describe('E2E Login to dashboard', () => {
 
-    it('input valid username dan password then Login', () => {
+    it('input valid email and password then Login', () => {
 
       cy.visit('https://magento.softwaretestingboard.com/')
       cy.contains("Sign In").click()
@@ -9,8 +9,9 @@ describe('E2E Login to dashboard', () => {
       cy.get('#email').type("email4testing.ata@gmail.com")
       // <input name="login[password]" type="password" autocomplete="off" class="input-text" id="pass" title="Password" data-validate="{required:true}" aria-required="true">
       cy.get('#pass').type("email4testingQA")
-      cy.contains("Sign In").click()
-      cy.url().should('include', '/customer/account/') 
+      cy.get('#send2').click()
+      cy.visit('https://magento.softwaretestingboard.com/customer/account/')
+      cy.contains("email4testing.ata@gmail.com")
     })
 
   })
