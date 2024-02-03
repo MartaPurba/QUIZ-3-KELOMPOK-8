@@ -11,7 +11,8 @@ describe('E2E Login to dashboard', () => {
       .should('have.attr', 'aria-required', 'true');
       cy.get('#email').type("email4testing.ata@gmail.com")
       cy.get('#send2').click()
-      cy.get('#pass-error').should('be.visible');
+      cy.get('#pass-error').should('be.visible')
+      .should('have.text', 'This is a required field.');
     })
 
   })
