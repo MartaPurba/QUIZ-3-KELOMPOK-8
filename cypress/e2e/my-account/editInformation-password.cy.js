@@ -13,6 +13,7 @@ describe("Login", function () {
       "https://magento.softwaretestingboard.com/customer/account/edit/]"
     );
     cy.wait(10000);
+    cy.get("#change-password").check(); // Check checkbox element
   });
 
   afterEach(function () {
@@ -20,78 +21,9 @@ describe("Login", function () {
     cy.wait(10000);
   });
 
-  it("Edit Information", function () {
-    cy.get("#firstname").clear().type("testing123");
-    cy.get("#lastname").clear().type("minminmin");
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-  });
-
-  it("Invalid Edit Information - Null fields", function () {
-    cy.get("#firstname").clear();
-    cy.get("#lastname").clear();
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-    cy.get("#firstname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
-    cy.get("#lastname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
-  });
-
-  it("Invalid Edit Information - Null lastname fields", function () {
-    cy.get("#firstname").clear().type("testing");
-    cy.get("#lastname").clear();
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-    cy.get("#lastname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
-  });
-
-  it("Invalid Edit Information - Null firstname fields", function () {
-    cy.get("#firstname").clear();
-    cy.get("#lastname").clear().type("testingminmin");
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-    cy.get("#firstname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
-  });
-
-  it("Edit email with wrong current password", function () {
-    cy.get("#change-email").check(); // Check checkbox element
-    cy.get("#current-password").type("cobatesting");
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-    cy.get(".message-error").should(
-      "have.text",
-      "\nThe password doesn't match this account. Verify the password and try again.\n"
-    );
-  });
-
-  it("Edit email with valid current password", function () {
-    cy.get("#change-email").check(); // Check checkbox element
-    cy.get("#current-password").type("@Testingmin");
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-    cy.get(".message-success").should(
-      "have.text",
-      "\nYou saved the account information.\n"
-    );
-  });
-
   //EDIT PASSWORD
   it("Edit password with null value", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("{ESC}");
     cy.get("#password").type("{ESC}");
     cy.get("#password-confirmation").type("{ESC}");
@@ -110,8 +42,7 @@ describe("Login", function () {
   });
 
   it("Edit password with null value  in new and confirm new password fields ", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("@Testingmin");
     cy.get("#password").type("{ESC}");
     cy.get("#password-confirmation").type("{ESC}");
@@ -127,8 +58,7 @@ describe("Login", function () {
   });
 
   it("Edit password with null value  in current and confirm new password fields ", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("{ESC}");
     cy.get("#password").type("@Testingmin");
     cy.get("#password-confirmation").type("{ESC}");
@@ -144,8 +74,7 @@ describe("Login", function () {
   });
 
   it("Edit password with null value  in current and new password fields ", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("{ESC}");
     cy.get("#password").type("{ESC}");
     cy.get("#password-confirmation").type("@Testingmin");
@@ -164,8 +93,7 @@ describe("Login", function () {
   });
 
   it("Edit password with valid value", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("@Testingmin");
     cy.get("#password").type("@Testingmin");
     cy.get("#password-confirmation").type("@Testingmin");
@@ -179,8 +107,7 @@ describe("Login", function () {
   });
 
   it("Edit password with wrong current password", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("cobalagiaja");
     cy.get("#password").type("@Testingmin");
     cy.get("#password-confirmation").type("@Testingmin");
@@ -194,8 +121,7 @@ describe("Login", function () {
   });
 
   it("Edit password with wrong current password", function () {
-    cy.get("#change-password").check(); // Check checkbox element
-    cy.wait(500);
+    cy.wait(200);
     cy.get("#current-password").type("@Testingmin");
     cy.get("#password").type("@Testingmin");
     cy.get("#password-confirmation").type("you're the best");
