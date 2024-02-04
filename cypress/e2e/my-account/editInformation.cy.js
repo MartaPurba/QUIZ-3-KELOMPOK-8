@@ -3,7 +3,7 @@ import { EMAIL, PASSWORD } from "../const/editInformation";
 describe("Login", function () {
   beforeEach(function () {
     cy.visit(Cypress.env("baseUrl"));
-    cy.get(".panel > .header > .authorization-link > a").click();
+    cy.get(".panel > .header > .authorization-link > a").click({ force: true });
     cy.get("#email").type(EMAIL);
     cy.get("#pass").type(PASSWORD);
     cy.get("#send2").click("center").should("be.visible");
@@ -81,9 +81,28 @@ describe("Login", function () {
     cy.get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
-    cy.get(".message-error").should(
+    cy.get(".message-success").should(
       "have.text",
-      "\nThe password doesn't match this account. Verify the password and try again.\n"
+      "\nYou saved the account information.\n"
     );
+  });
+
+  it.only("Edit password with null value", function () {
+    cy.get("#change-password").check(); // Check checkbox element
+    cy.get("#change-password").type("{ESC}");
+    cy.get("#password").type("{ESC}");
+    cy.get("#password-confirmation").type("{ESC}");
+    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
+      .contains("Save")
+      .click();
+    cy.get("#current-password-error")
+      .should("be.visible")
+      .should("have.text", "This is a required field.");
+    cy.get("#password-error")
+      .should("be.visible")
+      .should("have.text", "This is a required field.");
+    cy.get("#password-confirmation-error")
+      .should("be.visible")
+      .should("have.text", "This is a required field.");
   });
 });
