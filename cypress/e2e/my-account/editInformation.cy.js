@@ -74,4 +74,16 @@ describe("Login", function () {
       "\nThe password doesn't match this account. Verify the password and try again.\n"
     );
   });
+
+  it("Edit email with valid current password", function () {
+    cy.get("#change-email").check(); // Check checkbox element
+    cy.get("#current-password").type("@Testingmin");
+    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
+      .contains("Save")
+      .click();
+    cy.get(".message-error").should(
+      "have.text",
+      "\nThe password doesn't match this account. Verify the password and try again.\n"
+    );
+  });
 });
