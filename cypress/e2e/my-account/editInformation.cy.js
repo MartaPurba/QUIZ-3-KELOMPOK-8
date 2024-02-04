@@ -87,7 +87,7 @@ describe("Login", function () {
     );
   });
 
-  it.only("Edit password with null value", function () {
+  it("Edit password with null value", function () {
     cy.get("#change-password").check(); // Check checkbox element
     cy.get("#change-password").type("{ESC}");
     cy.get("#password").type("{ESC}");
@@ -104,5 +104,33 @@ describe("Login", function () {
     cy.get("#password-confirmation-error")
       .should("be.visible")
       .should("have.text", "This is a required field.");
+  });
+
+  it("Edit password with valid value", function () {
+    cy.get("#change-password").check(); // Check checkbox element
+    cy.get("#current-password").type("@Testingmin");
+    cy.get("#password").type("@Testingmin");
+    cy.get("#password-confirmation").type("@Testingmin");
+    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
+      .contains("Save")
+      .click();
+    cy.get(".message-success").should(
+      "have.text",
+      "\nYou saved the account information.\n"
+    );
+  });
+
+  it.only("Edit password with wrong current password", function () {
+    cy.get("#change-password").check(); // Check checkbox element
+    cy.get("#current-password").type("cobalagiaja");
+    cy.get("#password").type("@Testingmin");
+    cy.get("#password-confirmation").type("@Testingmin");
+    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
+      .contains("Save")
+      .click();
+    cy.get(".message-error").should(
+      "have.text",
+      "\nThe password doesn't match this account. Verify the password and try again.\n"
+    );
   });
 });
