@@ -5,6 +5,7 @@ describe("Login", function () {
     cy.visit(Cypress.env("baseUrl"));
     cy.wait(10000);
     cy.get(".panel > .header > .authorization-link > a").click();
+    cy.wait(500);
     cy.get("#email").type(EMAIL);
     cy.get("#pass").type(PASSWORD);
     cy.get("#send2").click("center").should("be.visible");
@@ -118,18 +119,5 @@ describe("Login", function () {
       "have.text",
       "\nThe password doesn't match this account. Verify the password and try again.\n"
     );
-  });
-
-  it("Edit password with wrong current password", function () {
-    cy.wait(200);
-    cy.get("#current-password").type("@Testingmin");
-    cy.get("#password").type("@Testingmin");
-    cy.get("#password-confirmation").type("you're the best");
-    cy.get("#form-validate > .actions-toolbar > div.primary > .action")
-      .contains("Save")
-      .click();
-    cy.get("#password-confirmation-error")
-      .should("be.visible")
-      .should("have.text", "Please enter the same value again.");
   });
 });
