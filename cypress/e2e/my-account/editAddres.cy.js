@@ -111,6 +111,10 @@ describe("Login", function () {
       .get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
+    cy.get(".message-success").should(
+      "have.text",
+      "\nYou saved the address.\n"
+    );
   });
 
   //   it.only("Add Address", function () {
