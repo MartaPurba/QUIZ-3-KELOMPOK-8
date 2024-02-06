@@ -26,14 +26,14 @@ describe("Login", function () {
     //   });
   });
 
-  it("Edit address with valid value in all fields", function () {
+  it.only("Edit address with valid value in all fields", function () {
     cy.get("#firstname")
       .invoke("val")
       .then((sometext) => cy.log(sometext));
     cy.get("#lastname")
       .invoke("val")
       .then((sometext) => cy.log(sometext));
-    cy.get("#company").type("Flower");
+    cy.get("#company").clear().type("Flower");
     cy.get("#telephone").clear().type("08224774748");
     cy.get("#street_1").clear().type("Hati-hati di jalan");
     cy.get("#city").clear().type("Toronto");
