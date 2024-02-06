@@ -1,4 +1,11 @@
 {
-  "email": "sanbercode@gmail.com",
-  "password": "Sanber123"
+  "account item valid in cart": {
+    "email": "sanbercode@gmail.com",
+    "password": "Sanber123"
+  },
+
+  "account cart is empty": {
+    "email2": "testingminmin@gmail.com",
+    "password2": "@Testingmin"
+  }
 }
