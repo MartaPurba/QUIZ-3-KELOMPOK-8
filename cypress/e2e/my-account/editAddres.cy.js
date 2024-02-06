@@ -26,7 +26,7 @@ describe("Login", function () {
     //   });
   });
 
-  it.only("Edit address with valid value in all fields", function () {
+  it("Edit address with valid value in all fields", function () {
     cy.get("#firstname")
       .invoke("val")
       .then((sometext) => cy.log(sometext));
