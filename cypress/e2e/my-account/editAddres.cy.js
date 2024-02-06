@@ -3,10 +3,14 @@ import { EMAIL, PASSWORD } from "../const/editInformation";
 describe("Login", function () {
   beforeEach(function () {
     cy.visit(Cypress.env("baseUrl"));
-    cy.wait(10200);
-    cy.get(".panel > .header > .authorization-link > a").click();
-    cy.wait(500);
-    cy.get("#email").type(EMAIL);
+    cy.wait(10000);
+    cy.get(".panel > .header > .authorization-link > a", {
+      setTimeout: 60000,
+    }).click({ force: true });
+    cy.wait(10000);
+    cy.get("#email", {
+      setTimeout: 60000,
+    }).type(EMAIL);
     cy.get("#pass").type(PASSWORD);
     cy.get("#send2").click("center").should("be.visible");
     cy.visit(Cypress.env("baseUrl") + "/customer/account");
@@ -22,14 +26,14 @@ describe("Login", function () {
     //   });
   });
 
-  it("Edit address with valid value in all fields", function () {
+  it.only("Edit address with valid value in all fields", function () {
     cy.get("#firstname")
       .invoke("val")
       .then((sometext) => cy.log(sometext));
     cy.get("#lastname")
       .invoke("val")
       .then((sometext) => cy.log(sometext));
-    cy.get("#company").type("Flower");
+    cy.get("#company").clear().type("Flower");
     cy.get("#telephone").clear().type("08224774748");
     cy.get("#street_1").clear().type("Hati-hati di jalan");
     cy.get("#city").clear().type("Toronto");
@@ -78,7 +82,7 @@ describe("Login", function () {
       .should("have.text", "This is a required field.");
   });
 
-  it.only("Edit Postalcode with invalid Zip/Postal Code", function () {
+  it("Edit Postalcode with invalid Zip/Postal Code", function () {
     cy.get("#firstname")
       .invoke("val")
       .then((sometext) => cy.log(sometext));
@@ -111,6 +115,10 @@ describe("Login", function () {
       .get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
+    cy.get(".message-success").should(
+      "have.text",
+      "\nYou saved the address.\n"
+    );
   });
 
   //   it.only("Add Address", function () {

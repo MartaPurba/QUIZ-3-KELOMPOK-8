@@ -4,17 +4,21 @@ describe("Login", function () {
   beforeEach(function () {
     cy.visit(Cypress.env("baseUrl"));
     cy.wait(10000);
-    cy.get(".panel > .header > .authorization-link > a").click();
-    cy.wait(500);
-    cy.get("#email").type(EMAIL);
-    cy.get("#pass").type(PASSWORD);
-    cy.get("#send2").click("center").should("be.visible");
+    cy.get(".panel > .header > .authorization-link > a", {
+      setTimeout: 60000,
+    }).click({ force: true });
+    cy.wait(10000);
+    cy.get("#email", {
+      setTimeout: 60000,
+    }).type(EMAIL);
+    cy.wait(500).get("#pass").type(PASSWORD);
+    cy.wait(500).get("#send2").click("center").should("be.visible");
     cy.visit(Cypress.env("baseUrl") + "/customer/account");
     cy.visit(
       "https://magento.softwaretestingboard.com/customer/account/edit/]"
     );
     cy.wait(10000);
-    cy.get("#change-password").check(); // Check checkbox element
+    cy.wait(500).get("#change-password").check(); // Check checkbox element
   });
 
   afterEach(function () {
@@ -119,5 +123,17 @@ describe("Login", function () {
       "have.text",
       "\nThe password doesn't match this account. Verify the password and try again.\n"
     );
+  });
+
+  it("Edit password with does not match the format Class of character", function () {
+    cy.wait(200);
+    cy.get("#current-password").type("@Testingmin");
+    cy.get("#password").type("coba12345");
+    cy.get("#password-error")
+      .should("be.visible")
+      .should(
+        "have.text",
+        "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
+      );
   });
 });

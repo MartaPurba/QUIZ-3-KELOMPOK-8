@@ -17,7 +17,8 @@ describe("Login", function () {
     cy.visit(
       "https://magento.softwaretestingboard.com/customer/account/edit/]"
     );
-    cy.wait(7000);
+    cy.wait(10000);
+    cy.wait(500).get("#change-email").check(); // Check checkbox element
   });
 
   afterEach(function () {
@@ -25,47 +26,49 @@ describe("Login", function () {
     cy.wait(7000);
   });
 
-  it("Edit Information", function () {
-    cy.get("#firstname").clear().type("testing123");
-    cy.get("#lastname").clear().type("minminmin");
+  it("Edit email with wrong current password", function () {
+    cy.get("#current-password").type("cobatesting");
     cy.get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
+    cy.get(".message-error").should(
+      "have.text",
+      "\nThe password doesn't match this account. Verify the password and try again.\n"
+    );
   });
 
-  it("Invalid Edit Information - Null fields", function () {
-    cy.get("#firstname").clear();
-    cy.get("#lastname").clear();
+  it("Edit email with valid current password", function () {
+    cy.get("#current-password").type("@Testingmin");
     cy.get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
-    cy.get("#firstname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
-    cy.get("#lastname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
+    cy.get(".message-success").should(
+      "have.text",
+      "\nYou saved the account information.\n"
+    );
   });
 
-  it("Invalid Edit Information - Null lastname fields", function () {
-    cy.get("#firstname").clear().type("testing");
-    cy.get("#lastname").clear();
+  it("Edit email with invalid format", function () {
+    cy.get("#email").clear().type("abscdhfjfk");
+    cy.get("#current-password").type("@Testingmin");
     cy.get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
-    cy.get("#lastname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
+    cy.get("#email-error").should(
+      "have.text",
+      "Please enter a valid email address."
+    );
   });
 
-  it("Invalid Edit Information - Null firstname fields", function () {
-    cy.get("#firstname").clear();
-    cy.get("#lastname").clear().type("testingminmin");
+  it("Edit email with valid format", function () {
+    cy.get("#email").clear().type("testingminmin@gmail.com");
+    cy.get("#current-password").type("@Testingmin");
     cy.get("#form-validate > .actions-toolbar > div.primary > .action")
       .contains("Save")
       .click();
-    cy.get("#firstname-error")
-      .should("be.visible")
-      .should("have.text", "This is a required field.");
+    cy.get("message-success").should(
+      "have.text",
+      "\nYou saved the account information.\n"
+    );
   });
 });

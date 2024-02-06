@@ -12,7 +12,7 @@ module.exports = defineConfig({
     baseUrl: "https://magento.softwaretestingboard.com/",
   },
 
-  defaultCommandTimeout: 5432,
+  defaultCommandTimeout: 10000,
   viewportWidth: 990,
   viewportHeight: 650,
 });
