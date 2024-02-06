@@ -125,7 +125,7 @@ describe("Login", function () {
     );
   });
 
-  it.only("Edit password with does not match the format Class of character", function () {
+  it("Edit password with does not match the format Class of character", function () {
     cy.wait(200);
     cy.get("#current-password").type("@Testingmin");
     cy.get("#password").type("coba12345");
