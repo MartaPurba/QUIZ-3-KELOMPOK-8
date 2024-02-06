@@ -124,4 +124,16 @@ describe("Login", function () {
       "\nThe password doesn't match this account. Verify the password and try again.\n"
     );
   });
+
+  it.only("Edit password with does not match the format Class of character", function () {
+    cy.wait(200);
+    cy.get("#current-password").type("@Testingmin");
+    cy.get("#password").type("coba12345");
+    cy.get("#password-error")
+      .should("be.visible")
+      .should(
+        "have.text",
+        "Minimum of different classes of characters in password is 3. Classes of characters: Lower Case, Upper Case, Digits, Special Characters."
+      );
+  });
 });
