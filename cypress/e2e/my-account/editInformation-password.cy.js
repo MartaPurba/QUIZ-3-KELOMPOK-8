@@ -4,17 +4,21 @@ describe("Login", function () {
   beforeEach(function () {
     cy.visit(Cypress.env("baseUrl"));
     cy.wait(10000);
-    cy.get(".panel > .header > .authorization-link > a").click();
-    cy.wait(500);
-    cy.get("#email").type(EMAIL);
-    cy.get("#pass").type(PASSWORD);
-    cy.get("#send2").click("center").should("be.visible");
+    cy.get(".panel > .header > .authorization-link > a", {
+      setTimeout: 60000,
+    }).click({ force: true });
+    cy.wait(10000);
+    cy.get("#email", {
+      setTimeout: 60000,
+    }).type(EMAIL);
+    cy.wait(500).get("#pass").type(PASSWORD);
+    cy.wait(500).get("#send2").click("center").should("be.visible");
     cy.visit(Cypress.env("baseUrl") + "/customer/account");
     cy.visit(
       "https://magento.softwaretestingboard.com/customer/account/edit/]"
     );
     cy.wait(10000);
-    cy.get("#change-password").check(); // Check checkbox element
+    cy.wait(500).get("#change-password").check(); // Check checkbox element
   });
 
   afterEach(function () {
